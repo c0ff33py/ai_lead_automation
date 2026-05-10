@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException  # type: ignore
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from contextlib import asynccontextmanager
 from database import init_db, save_lead, get_all_leads
