@@ -1,7 +1,12 @@
+import os
 import requests
 
-BOT_TOKEN = "YOUR_BOT_TOKEN"
-CHAT_ID = "YOUR_CHAT_ID"
+from dotenv import load_dotenv
+
+load_dotenv()
+
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+CHAT_ID = os.getenv("CHAT_ID")
 
 def send_telegram_message(message):
 
@@ -12,4 +17,6 @@ def send_telegram_message(message):
         "text": message
     }
 
-    requests.post(url, data=data)
+    response = requests.post(url, data=data)
+
+    return response.json()
