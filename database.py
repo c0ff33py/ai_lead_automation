@@ -35,3 +35,24 @@ def get_all_leads() -> list:
     rows = conn.execute("SELECT * FROM leads ORDER BY id DESC").fetchall()
     conn.close()
     return [dict(row) for row in rows]
+
+def update_lead_status(lead_id: int, status: str):
+    conn = sqlite3.connect(DB_PATH)
+    conn.execute("UPDATE leads SET status=? WHERE id=?", (status, lead_id))
+    conn.commit()
+    conn.close()
+
+def init_db():
+    conn = sqlite3.connect(DB_PATH)
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS leads (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            phone TEXT NOT NULL,
+            business_type TEXT NOT NULL,
+            status TEXT DEFAULT 'new',
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+    conn.commit()
+    conn.close()
